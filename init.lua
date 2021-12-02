@@ -1,4 +1,4 @@
-require('plug-installs')
+require('plugins')
 require('settings')
 require('keybinds')
 local utils = require('utils')
