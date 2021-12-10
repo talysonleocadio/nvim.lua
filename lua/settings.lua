@@ -37,5 +37,10 @@ augroup Terminal
   autocmd TermClose * close
 augroup END
 ]]
+
+vim.cmd [[
+augroup ClearTrailingSpaces
+  autocmd!
+  autocmd Bufwrite * %s/\s\+$//e
 augroup END
 ]]
