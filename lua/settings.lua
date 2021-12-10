@@ -31,8 +31,11 @@ vim.o.completeopt = 'menuone,noselect'
 
 -- Augroups
 vim.cmd [[
-augroup TerminalInitialization
+augroup Terminal
   autocmd!
   autocmd TermOpen * setlocal nonumber norelativenumber | :startinsert
+  autocmd TermClose * close
+augroup END
+]]
 augroup END
 ]]
