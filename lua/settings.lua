@@ -26,6 +26,9 @@ vim.o.termguicolors = true
 vim.g.gruvbox_italic = true
 vim.cmd [[colorscheme gruvbox]]
 
+-- Autocomplete options
+vim.o.completeopt = 'menuone,noselect'
+
 -- Augroups
 vim.cmd [[
 augroup TerminalInitialization
