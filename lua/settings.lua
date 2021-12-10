@@ -16,7 +16,7 @@ set.updatetime = 300
 set.inccommand = 'nosplit'
 set.title = true
 set.undofile = true
-set.undodir = '~/.nvim/undo'
+set.undodir = vim.fn.expand('~/') .. '.nvim/undo'
 
 -- Default python bin path
 vim.g.python3_host_prog = '/usr/bin/python3'
