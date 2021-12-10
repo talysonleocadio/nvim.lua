@@ -13,8 +13,4 @@ function M.open_terminal()
   vim.cmd [[resize 20]]
 end
 
-function M.split_by_dot_and_get_setting_name(setting_file)
-  return string.gmatch(setting_file, "(%g+)%.")()
-end
-
 return M
