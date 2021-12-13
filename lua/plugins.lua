@@ -49,7 +49,8 @@ return require('packer').startup(function(use)
       'hrsh7th/cmp-buffer',
       'hrsh7th/cmp-path',
       'hrsh7th/cmp-cmdline',
-      'onsails/lspkind-nvim'
+      'onsails/lspkind-nvim',
+      'quangnguyen30192/cmp-nvim-ultisnips'
     },
     config = function () require('plugin-settings.lsp-confs') end
   }
@@ -79,11 +80,18 @@ return require('packer').startup(function(use)
     config = function () require('plugin-settings.indent-blankline-confs') end
   }
 
-
   use {
     'jose-elias-alvarez/null-ls.nvim',
     requires = {'nvim-lua/plenary.nvim', 'neovim/nvim-lspconfig'},
     config = function () require('plugin-settings.null-ls-confs') end
   }
+
+  use({
+    "SirVer/ultisnips",
+    requires = "honza/vim-snippets",
+    config = function()
+      require('plugin-settings.ultisnips-confs')
+    end,
+  })
 
 end)
