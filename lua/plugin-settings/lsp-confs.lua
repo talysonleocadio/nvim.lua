@@ -15,10 +15,18 @@ for _, lsp in ipairs(servers) do
   })
 end
 
+local replace_termcodes = function (string)
+  return vim.api.nvim_replace_termcodes(string, true, true, true)
+end
+
 local lspkind = require('lspkind')
 
-local cmp = require 'cmp'
+
+local cmp = require('cmp')
 cmp.setup {
+  snippet = {
+    expand = function(args) vim.fn["UltiSnips#Anon"](args.body) end
+  },
   formatting = {
     format = lspkind.cmp_format({
       maxwidth = 50
@@ -35,26 +43,63 @@ cmp.setup {
       behavior = cmp.ConfirmBehavior.Replace,
       select = true,
     },
-    ['<C-j>'] = function(fallback)
+    ['<C-j>'] = cmp.mapping({
+      c = function()
       if cmp.visible() then
-        cmp.select_next_item()
-      else
-        fallback()
+          cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert })
+        else
+          cmp.complete()
+        end
+      end,
+      i = function(fallback)
+        if cmp.visible() then
+          cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert })
+        elseif vim.fn["UltiSnips#CanJumpForwards"]() == 1 then
+          vim.api.nvim_feedkeys(replace_termcodes("<Plug>(ultisnips_jump_forward)"), 'm', true)
+        else
+          fallback()
+        end
+      end,
+      s = function(fallback)
+        if vim.fn["UltiSnips#CanJumpForwards"]() == 1 then
+          vim.api.nvim_feedkeys(replace_termcodes("<Plug>(ultisnips_jump_forward)"), 'm', true)
+        else
+          fallback()
+        end
       end
-    end,
-    ['<C-k>'] = function(fallback)
-      if cmp.visible() then
-        cmp.select_prev_item()
-      else
-        fallback()
+    }),
+    ['<C-k>'] = cmp.mapping({
+      c = function()
+        if cmp.visible() then
+          cmp.select_prev_item({ behavior = cmp.SelectBehavior.Insert })
+        else
+          cmp.complete()
+        end
+      end,
+      i = function(fallback)
+        if cmp.visible() then
+          cmp.select_prev_item({ behavior = cmp.SelectBehavior.Insert })
+        elseif vim.fn["UltiSnips#CanJumpBackwards"]() == 1 then
+          return vim.api.nvim_feedkeys(replace_termcodes("<Plug>(ultisnips_jump_backward)"), 'm', true)
+        else
+          fallback()
+        end
+      end,
+      s = function(fallback)
+        if vim.fn["UltiSnips#CanJumpBackwards"]() == 1 then
+          return vim.api.nvim_feedkeys(replace_termcodes("<Plug>(ultisnips_jump_backward)"), 'm', true)
+        else
+          fallback()
+        end
       end
-    end,
+    })
   },
   sources = {
     { name = 'nvim_lsp' },
     { name = 'path' },
     { name = 'buffer' },
-    { name = 'cmdline' }
+    { name = 'cmdline' },
+    { name = 'ultisnips' }
   }
 }
 
@@ -66,6 +111,7 @@ cmp.setup.cmdline('/', {
 
 cmp.setup.cmdline(':', {
   sources = {
-    { name = 'cmdline' }
+    { name = 'cmdline' },
+    { name = 'path' }
   }
 })
