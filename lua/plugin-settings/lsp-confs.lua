@@ -1,9 +1,26 @@
 local capabilities = vim.lsp.protocol.make_client_capabilities()
+
 capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
 local lspconfig = require('lspconfig')
 
-local servers = {'pyright', 'tsserver', 'sumneko_lua'}
+local servers = {'pyright', 'sumneko_lua'}
+
+lspconfig.tsserver.setup({
+  on_attach = function (client, bufnr)
+    client.resolved_capabilities.document_formatting = false;
+    client.resolved_capabilities.document_range_formatting = false
+
+    local ts_utils = require('nvim-lsp-ts-utils')
+    ts_utils.setup({})
+
+    ts_utils.setup_client(client)
+
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gs', ':TSLspOrganize<CR>', {noremap = true, silent = true})
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gi', ':TSLspRenameFile<CR>', {noremap = true, silent = true})
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'go', ':TSLspImportAll<CR>', {noremap = true, silent = true})
+  end
+})
 
 for _, lsp in ipairs(servers) do
   lspconfig[lsp].setup({
