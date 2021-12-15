@@ -85,7 +85,7 @@ return require('packer').startup(function(use)
 
   use {
     'jose-elias-alvarez/null-ls.nvim',
-    requires = {'nvim-lua/plenary.nvim', 'neovim/nvim-lspconfig'},
+    requires = {'nvim-lua/plenary.nvim', 'neovim/nvim-lspconfig', 'jose-elias-alvarez/nvim-lsp-ts-utils'},
     config = function () require('plugin-settings.null-ls-confs') end
   }
 
