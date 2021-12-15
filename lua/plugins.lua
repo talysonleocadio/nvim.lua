@@ -89,12 +89,12 @@ return require('packer').startup(function(use)
     config = function () require('plugin-settings.null-ls-confs') end
   }
 
-  use({
+  use {
     "SirVer/ultisnips",
     requires = "honza/vim-snippets",
     config = function()
       require('plugin-settings.ultisnips-confs')
     end,
-  })
+  }
 
 end)
