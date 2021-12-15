@@ -77,7 +77,10 @@ return require('packer').startup(function(use)
 
   use {
     "lukas-reineke/indent-blankline.nvim",
-    config = function () require('plugin-settings.indent-blankline-confs') end
+    event = "BufRead",
+    config = function ()
+      require('plugin-settings.indent-blankline-confs')
+    end
   }
 
   use {
