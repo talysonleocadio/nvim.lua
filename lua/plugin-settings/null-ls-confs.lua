@@ -3,12 +3,7 @@ local null_ls = require('null-ls')
 local sources = {
   -- Python
   null_ls.builtins.diagnostics.flake8,
-  null_ls.builtins.formatting.black,
-
-  -- JSON
-  null_ls.builtins.formatting.json_tool.with({
-    extra_args = {"--indent=2"}
-  })
+  -- null_ls.builtins.formatting.black,
 }
 
 null_ls.setup({
