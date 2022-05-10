@@ -85,16 +85,28 @@ return require('packer').startup(function(use)
 
   use {
     'jose-elias-alvarez/null-ls.nvim',
-    requires = {'nvim-lua/plenary.nvim', 'neovim/nvim-lspconfig', 'jose-elias-alvarez/nvim-lsp-ts-utils'},
+    requires = {
+      'nvim-lua/plenary.nvim',
+      'neovim/nvim-lspconfig',
+      'jose-elias-alvarez/nvim-lsp-ts-utils'
+    },
     config = function () require('plugin-settings.null-ls-confs') end
   }
 
   use {
     "SirVer/ultisnips",
     requires = "honza/vim-snippets",
-    config = function()
-      require('plugin-settings.ultisnips-confs')
-    end,
+    config = function() require('plugin-settings.ultisnips-confs') end
+  }
+
+  use {
+    'editorconfig/editorconfig-vim',
+    config = function () require('plugin-settings.editorconfig-confs') end
+  }
+
+  use {
+    'mfussenegger/nvim-dap',
+    config = function () require('plugin-settings.nvim-dap-confs') end
   }
 
 end)
