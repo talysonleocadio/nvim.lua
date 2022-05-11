@@ -1,4 +1,3 @@
-vim.g.nvim_tree_indent_markers = 1
 vim.g.nvim_tree_icons = {
   git = {
     unstaged = 'M',
@@ -18,7 +17,6 @@ vim.g.nvim_tree_show_icons = {
 }
 
 return require('nvim-tree').setup({
-  auto_close = true,
   git = {
     ignore = false
   },
@@ -28,5 +26,10 @@ return require('nvim-tree').setup({
   filters = {
     dotfiles = true,
     custom = {'.git', 'node_modules'}
+  },
+  renderer = {
+    indent_markers = {
+      enable = true
+    }
   }
 })
