@@ -19,3 +19,8 @@ map('n', '<leader>bs', ':Startify<CR>', options)
 map('n', '<leader>ff', ":lua require('telescope.builtin').find_files()<CR>", options)
 map('n', '<leader>rg', ":lua require('telescope.builtin').live_grep()<CR>", options)
 map('n', '<leader>ts', ":lua require('telescope.builtin').treesitter()<CR>", options)
+
+-- nvim-dap
+map('n', '<leader>db', ":lua require('dap').toggle_breakpoint()<CR>", options)
+map('n', '<leader>dc', ":lua require('dap').continue()<CR>", options)
+map('n', '<leader>dr', ":lua require('dap').repl.open()<CR>", options)
