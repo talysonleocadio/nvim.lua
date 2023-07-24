@@ -1,15 +1,13 @@
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-
-capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
+capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 local lspconfig = require('lspconfig')
 
-local servers = {'pyright', 'sumneko_lua'}
+local servers = {'pyright', 'lua_ls'}
 
 lspconfig.tsserver.setup({
   on_attach = function (client, bufnr)
-    client.resolved_capabilities.document_formatting = false;
-    client.resolved_capabilities.document_range_formatting = false
+    client.server_capabilities.documentFormattingProvider = false
+    client.server_capabilities.documentRangeFormattingProvider = false
 
     local ts_utils = require('nvim-lsp-ts-utils')
     ts_utils.setup({})
@@ -25,8 +23,8 @@ lspconfig.tsserver.setup({
 for _, lsp in ipairs(servers) do
   lspconfig[lsp].setup({
     on_attach = function (client)
-      client.resolved_capabilities.document_formatting = false
-      client.resolved_capabilities.document_range_formatting = false
+      client.server_capabilities.documentFormattingProvider = false
+      client.server_capabilities.documentRangeFormattingProvider = false
     end,
     capabilities = capabilities
   })
@@ -44,14 +42,10 @@ cmp.setup {
   snippet = {
     expand = function(args) vim.fn["UltiSnips#Anon"](args.body) end
   },
-  formatting = {
-    format = lspkind.cmp_format({
-      maxwidth = 50
-    })
+ formatting = {
+    format = lspkind.cmp_format()
   },
   mapping = {
-    ['<C-p>'] = cmp.mapping.select_prev_item(),
-    ['<C-n>'] = cmp.mapping.select_next_item(),
     ['<C-d>'] = cmp.mapping.scroll_docs(-4),
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
     ['<C-c>'] = cmp.mapping.complete(),
@@ -112,10 +106,12 @@ cmp.setup {
     })
   },
   sources = {
-    { name = 'nvim_lsp' },
-    { name = 'path' },
     { name = 'buffer' },
     { name = 'cmdline' },
+    { name = 'calc' },
+    { name = 'nvim_lsp' },
+    { name = 'nvim_lua' },
+    { name = 'path' },
     { name = 'ultisnips' }
   }
 }

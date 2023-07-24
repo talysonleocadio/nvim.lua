@@ -2,7 +2,7 @@ local dap = require('dap')
 dap.adapters.python = {
   type = 'server';
   host = '127.0.0.1';
-  port = 11213;
+  port = 11211;
 }
 
 dap.configurations.python = {
@@ -11,7 +11,7 @@ dap.configurations.python = {
     request = 'attach';
     name = 'Python: Remote Attach';
     connect = {
-      port = 11213;
+      port = 11211;
       host = '127.0.0.1';
     };
     mode = "remove";

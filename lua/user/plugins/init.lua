@@ -1,9 +1,10 @@
-vim.cmd([[
-  augroup PackerUserConfig
-    autocmd!
-    autocmd BufWritePost plugins.lua source <afile> | PackerCompile
-  augroup end
-]])
+local packer_user_config_group = vim.api.nvim_create_augroup("PackerUserConfig", {})
+
+vim.api.nvim_create_autocmd({"BufWritePost"}, {
+  group = packer_user_config_group,
+  pattern = "plugins.lua",
+  command = "source <afile> | PackerCompile",
+})
 
 return require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
@@ -12,7 +13,7 @@ return require('packer').startup(function(use)
   use 'andymass/vim-matchup'
   use {
     'mhinz/vim-startify',
-    config = function () require('plugin-settings.vim-startify-confs') end
+    config = function () require('user.plugins.configs.vim-startify') end
   }
 
   use {
@@ -20,23 +21,26 @@ return require('packer').startup(function(use)
     requires = {
       {'kyazdani42/nvim-web-devicons'},
     },
-    config = function () require('plugin-settings.nvim-tree-confs') end
+    config = function () require('user.plugins.configs.nvim-tree') end
   }
 
   use {
     'nvim-lualine/lualine.nvim',
     requires = {'kyazdani42/nvim-web-devicons'},
-    config = function () require('plugin-settings.lualine-confs') end
+    config = function () require('user.plugins.configs.lualine') end
   }
 
   use {
     'vimwiki/vimwiki',
-    config = function () require('plugin-settings.vimwiki-confs') end
+    config = function () require('user.plugins.configs.vimwiki') end
   }
   use 'RRethy/vim-illuminate'
 
   use 'tpope/vim-fugitive'
-  use 'airblade/vim-gitgutter'
+  use {
+    'airblade/vim-gitgutter',
+    branch = 'main'
+  }
   use 'rhysd/git-messenger.vim'
 
   use 'morhetz/gruvbox'
@@ -44,21 +48,29 @@ return require('packer').startup(function(use)
   use {
     'neovim/nvim-lspconfig',
     requires = {
+      -- Completion engine plugin
       'hrsh7th/nvim-cmp',
-      'hrsh7th/cmp-nvim-lsp',
+
+      -- Completion sources
       'hrsh7th/cmp-buffer',
-      'hrsh7th/cmp-path',
+      'hrsh7th/cmp-calc',
       'hrsh7th/cmp-cmdline',
+      'hrsh7th/cmp-nvim-lsp',
+      'hrsh7th/cmp-nvim-lua',
+      'hrsh7th/cmp-path',
+
+      -- vscode pictograms for lsp
       'onsails/lspkind-nvim',
+      -- Ultisnip comletion source
       'quangnguyen30192/cmp-nvim-ultisnips'
     },
-    config = function () require('plugin-settings.lsp-confs') end
+    config = function () require('user.plugins.configs.lsp') end
   }
 
   use {
     'nvim-treesitter/nvim-treesitter',
     run = ':TSUpdate',
-    config = function () require('plugin-settings.nvim-treesitter-confs') end
+    config = function () require('user.plugins.configs.nvim-treesitter') end
   }
 
   use {
@@ -67,19 +79,19 @@ return require('packer').startup(function(use)
       {'nvim-lua/plenary.nvim'},
       {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
     },
-    config = function () require('plugin-settings.telescope-confs') end
+    config = function () require('user.plugins.configs.telescope') end
   }
 
   use {
     'windwp/nvim-autopairs',
-    config = function () require('plugin-settings.nvim-autopairs-confs') end
+    config = function () require('user.plugins.configs.nvim-autopairs') end
   }
 
   use {
     "lukas-reineke/indent-blankline.nvim",
     event = "BufRead",
     config = function ()
-      require('plugin-settings.indent-blankline-confs')
+      require('user.plugins.configs.indent-blankline')
     end
   }
 
@@ -90,23 +102,23 @@ return require('packer').startup(function(use)
       'neovim/nvim-lspconfig',
       'jose-elias-alvarez/nvim-lsp-ts-utils'
     },
-    config = function () require('plugin-settings.null-ls-confs') end
+    config = function () require('user.plugins.configs.null-ls') end
   }
 
   use {
     "SirVer/ultisnips",
     requires = "honza/vim-snippets",
-    config = function() require('plugin-settings.ultisnips-confs') end
+    config = function() require('user.plugins.configs.ultisnips') end
   }
 
   use {
     'editorconfig/editorconfig-vim',
-    config = function () require('plugin-settings.editorconfig-confs') end
+    config = function () require('user.plugins.configs.editorconfig') end
   }
 
   use {
     'mfussenegger/nvim-dap',
-    config = function () require('plugin-settings.nvim-dap-confs') end
+    config = function () require('user.plugins.configs.nvim-dap') end
   }
 
   use {

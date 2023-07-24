@@ -5,7 +5,7 @@ vim.g.mapleader = " "
 
 map('t', '<Esc>', [[<C-\><C-N>]], options)
 map('n', '<C-l>', ':noh<CR>', options)
-map('n', '<leader>to', ":lua require('utils').open_terminal()<CR>", options)
+map('n', '<leader>to', ":lua require('user.utils').open_terminal()<CR>", options)
 
 -- nvim-tree.lua
 map('n', '<leader>nt', ':NvimTreeToggle<CR>', options)
