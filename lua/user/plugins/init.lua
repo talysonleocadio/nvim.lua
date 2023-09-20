@@ -1,6 +1,7 @@
-local packer_user_config_group = vim.api.nvim_create_augroup("PackerUserConfig", {})
+local nvim_api = vim.api
+local packer_user_config_group = nvim_api.nvim_create_augroup("PackerUserConfig", {})
 
-vim.api.nvim_create_autocmd({"BufWritePost"}, {
+nvim_api.nvim_create_autocmd({"BufWritePost"}, {
   group = packer_user_config_group,
   pattern = "init.lua",
   command = "source <afile> | PackerCompile",
@@ -133,6 +134,7 @@ return require('packer').startup(function(use)
 
   use {
     "rcarriga/nvim-dap-ui",
+    config = function () require ('user.plugins.configs.nvim-dap-ui') end,
     requires = {
       "mfussenegger/nvim-dap",
       config = function () require('user.plugins.configs.nvim-dap') end
