@@ -2,7 +2,7 @@ local packer_user_config_group = vim.api.nvim_create_augroup("PackerUserConfig",
 
 vim.api.nvim_create_autocmd({"BufWritePost"}, {
   group = packer_user_config_group,
-  pattern = "plugins.lua",
+  pattern = "init.lua",
   command = "source <afile> | PackerCompile",
 })
 
@@ -11,6 +11,7 @@ return require('packer').startup(function(use)
   use 'tpope/vim-surround'
   use 'tpope/vim-commentary'
   use 'andymass/vim-matchup'
+
   use {
     'mhinz/vim-startify',
     config = function () require('user.plugins.configs.vim-startify') end
@@ -34,23 +35,21 @@ return require('packer').startup(function(use)
     'vimwiki/vimwiki',
     config = function () require('user.plugins.configs.vimwiki') end
   }
-  use 'RRethy/vim-illuminate'
 
+  use 'RRethy/vim-illuminate'
   use 'tpope/vim-fugitive'
+
   use {
     'airblade/vim-gitgutter',
     branch = 'main'
   }
-  use 'rhysd/git-messenger.vim'
 
-  use 'morhetz/gruvbox'
+  use 'rhysd/git-messenger.vim'
+  use 'ellisonleao/gruvbox.nvim'
 
   use {
-    'neovim/nvim-lspconfig',
+    'hrsh7th/nvim-cmp',
     requires = {
-      -- Completion engine plugin
-      'hrsh7th/nvim-cmp',
-
       -- Completion sources
       'hrsh7th/cmp-buffer',
       'hrsh7th/cmp-calc',
@@ -62,9 +61,25 @@ return require('packer').startup(function(use)
       -- vscode pictograms for lsp
       'onsails/lspkind-nvim',
       -- Ultisnip comletion source
-      'quangnguyen30192/cmp-nvim-ultisnips'
+      'quangnguyen30192/cmp-nvim-ultisnips',
     },
-    config = function () require('user.plugins.configs.lsp') end
+    config = function ()
+        require('user.plugins.configs.completions')
+    end
+  }
+
+  use {
+    {
+      'williamboman/mason.nvim',
+      'williamboman/mason-lspconfig.nvim',
+      run = ':MasonUpdate'
+    },
+    {
+      'neovim/nvim-lspconfig',
+      config = function ()
+        require('user.plugins.configs.lsp')
+      end
+    }
   }
 
   use {
@@ -117,9 +132,17 @@ return require('packer').startup(function(use)
   }
 
   use {
-    'mfussenegger/nvim-dap',
-    config = function () require('user.plugins.configs.nvim-dap') end
+    "rcarriga/nvim-dap-ui",
+    requires = {
+      "mfussenegger/nvim-dap",
+      config = function () require('user.plugins.configs.nvim-dap') end
+    }
   }
+
+  -- use {
+  --   'mfussenegger/nvim-dap',
+  --   config = function () require('user.plugins.configs.nvim-dap') end
+  -- }
 
   use {
     'iamcco/markdown-preview.nvim',
