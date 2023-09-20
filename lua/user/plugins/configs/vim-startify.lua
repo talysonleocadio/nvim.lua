@@ -6,7 +6,7 @@ vim.g.startify_bookmarks = {
   {m = '~/.config/nvim/lua/keybinds.lua'},
   {n = '~/.config/nvim/init.lua'},
   {p = '~/.config/nvim/lua/plugins.lua'},
-  {ps = '~/.config/nvim/lua/plugin-settings/'},
+  {ps = '~/.config/nvim/lua/user/plugins/configs'},
   {s = '~/.config/nvim/lua/settings.lua'},
   {z = '~/.dotfiles/zsh/.zshrc'},
 }
