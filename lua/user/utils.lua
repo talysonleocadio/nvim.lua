@@ -1,16 +1,25 @@
 local M = {}
 
-function M.open_terminal()
-  vim.o.splitright = true
-  vim.o.splitbelow = true
+local vim_options = vim.o
+local vim_cmd = vim.cmd
+local vim_functions = vim.fn
+local vim_api = vim.api
 
-  if (vim.fn.executable('zsh') == 1) then
-    vim.cmd [[split term://zsh]]
+function M.open_terminal()
+  vim_options.splitright = true
+  vim_options.splitbelow = true
+
+  if (vim_functions.executable('zsh') == 1) then
+    vim_cmd [[split term://zsh]]
   else
-    vim.cmd [[split term://bash]]
+    vim_cmd [[split term://bash]]
   end
 
-  vim.cmd [[resize 20]]
+  vim_cmd [[resize 20]]
+end
+
+function M.replace_termcodes(string)
+  return vim_api.nvim_replace_termcodes(string, true, true, true)
 end
 
 return M
