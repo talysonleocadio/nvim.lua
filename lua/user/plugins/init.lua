@@ -27,6 +27,10 @@ return require('packer').startup(function(use)
   }
 
   use {
+    "LunarVim/bigfile.nvim"
+  }
+
+  use {
     'nvim-lualine/lualine.nvim',
     requires = {'kyazdani42/nvim-web-devicons'},
     config = function () require('user.plugins.configs.lualine') end
